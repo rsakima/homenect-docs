@@ -26,6 +26,13 @@ Status: **LOCKED / READY FOR P0 IMPLEMENTATION**
 - [Pilot / Production Gate Checklist v1.0](07_system/35_HOMENECT_Pilot_Production_Gate_Checklist_v1.0.md)
 - [AI Collaborative Development Protocol v1.0](07_system/36_HOMENECT_AI_Collaborative_Development_Protocol_v1.0.md)
 
+## 人が読む補助資料
+
+- [Development to Production Flow v1.0](07_system/37_HOMENECT_Development_to_Production_Flow_v1.0.md)
+  - 「作る → 自動チェック → Staging確認 → Production承認 → 公開」を簡単な日本語で把握する。
+  - Gitは `main + 短命branch`、環境は Development / Preview / Staging / Production に分ける。
+  - Claude / Codex交代はGit + `docs/AI_HANDOFF.md` を使う。
+
 ## Companion / Formal Decisions
 
 - Business Concept Master v2.3
@@ -81,6 +88,14 @@ Claude Desktop / Claude Code / Codexは、Gitを共通記憶として交代可�
 - 次のAIはHandoff / last commit / diff / testsから再開
 - Token節約は Search → Minimum Read → Reuse → Minimum Change → Verify → Diff → Handoff
 
+## Deployment Flow Lock
+
+- Gitは `main + 短命feature/fix/chore branch` を基本とし、長期の `dev / staging / main` 3ブランチ運用にはしない。
+- mainへ統合した最新版をStagingへ自動デプロイする。
+- Product OwnerがStagingをブラウザで確認し、Production公開を承認する。
+- ProductionにはStaging確認済みの同一commitをデプロイする。
+- DB変更はMigrationで管理し、Staging → Productionの順に適用する。
+
 ## Gate Lock
 
 - Pilot前: Partner/Area/保険、Config、RLS/Auth/E2E、通知、Incident、Restore、S1/S2=0を確認
@@ -97,6 +112,7 @@ Claude Desktop / Claude Code / Codexは、Gitを共通記憶として交代可�
 - Pilot/Production Gate: **LOCKED**
 - API contract: **LOCKED — OpenAPI v1.1 unified**
 - Claude/Codex handoff: **LOCKED — Git shared-memory protocol**
+- Development → Staging → Production flow: **LOCKED**
 - Real pricing/payout/minimum_margin: **CONFIG / Pilot前決定**
 - Legal review: **Production Gate**
 - Initial real Partner/Area/insurance: **Pilot Gate**
