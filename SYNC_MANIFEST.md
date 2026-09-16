@@ -1,47 +1,67 @@
 # HOMENECT Markdown同期マニフェスト
 
-> 2026-09-16 完成資料と GitHub Markdown 原稿の全文同期記録。
+更新日：2026-09-16
 
-## 同期方針
+## 現行正式スナップショット
 
-- Word/DOCXの本文・見出し・箇条書き・表をMarkdownへ反映。
-- Excel管理台帳・収益シミュレーションはシート内容と数式をMarkdownへ反映。
-- 画像そのものはGoogle Driveの完成版を正とし、Markdownでは本文を正とする。
-- 法務資料は「法務確認用ドラフト」の位置づけを維持。
+Google Drive：`HOMENECT / 98_正式資料一式_v1.1_20260916`
 
-## 同期ファイル
+https://drive.google.com/drive/folders/19lkUm6MJ6AtxKAjV0jiIQPKILPEPtTWm
 
-| GitHub | 同期元 | SHA-256（同期元） |
+## v1.1で正式採用したDecision
+
+**案件価格保護・応援施工制度**
+
+- HELPとReferralを分離。
+- HELPではお客様の確定料金を原則維持。
+- 応援受託条件と通常販売価格を分離。
+- Referralは新料金を事前承認。
+- 追加作業は施工前承認。
+- 赤字・低採算案件は自動成立禁止。
+- HELPだけではpreferred Partnerを変更しない。
+- 協力業者間の価格共同決定を行わない。
+
+## GitHub同期対象
+
+| 分類 | GitHub | Google Drive / 同期元 |
 | --- | --- | --- |
-| `00_index/00_HOMENECT_正式資料一覧・使い方.md` | `00_まずここを見てください/00_HOMENECT_正式資料一覧・使い方.docx` | `65c677ab2e35fd45` |
-| `01_business/10_1枚で分かるHOMENECT.md` | `00_まずここを見てください/10_1枚で分かるHOMENECT.docx` | `698d2a7555edcb28` |
-| `01_business/01_HOMENECT事業の全体説明書.md` | `01_事業の全体説明/01_HOMENECT_事業の全体説明書.docx` | `879dd37781eb61b9` |
-| `02_customer/02_お客様向けのご案内.md` | `02_お客様向け/02_お客様向けのご案内.docx` | `e558bf211627dd4a` |
-| `02_customer/14_お客様・協力業者への対応文例集.md` | `02_お客様向け/14_お客様・協力業者への対応文例集.docx` | `1fdf61e3a6629972` |
-| `03_partners/03_協力業者向けの参加ルール.md` | `03_協力業者向け/03_協力業者向けの参加ルール.docx` | `fb4dd98d6a8ea02d` |
-| `03_partners/12_協力業者を募集するための説明資料.md` | `03_協力業者向け/12_協力業者を募集するための説明資料.docx` | `e5f6430827001679` |
-| `04_service/04_エアコンクリーニング作業のやり方.md` | `04_施工・作業/04_エアコンクリーニング作業のやり方.docx` | `b8cf775151096c8e` |
-| `05_incidents/05_事故・トラブルが起きた時の対応書.md` | `05_事故・トラブル/05_事故・トラブルが起きた時の対応書.docx` | `f9b89283ed15e52a` |
-| `06_operations/06_毎日の運営のやり方.md` | `06_毎日の運営/06_毎日の運営のやり方.docx` | `1ce7862e643984fb` |
-| `06_operations/09_サービス開始前の確認書.md` | `06_毎日の運営/09_サービス開始前の確認書.docx` | `3b2a6ec87f342f1c` |
-| `07_system/07_HOMENECTシステムの作り方説明書.md` | `07_システム/07_HOMENECT_システムの作り方説明書.docx` | `75e17443f679a9df` |
-| `08_mockups/11_サービス画面イメージ・モックアップ集.md` | `08_画面イメージ/11_サービス画面イメージ・モックアップ集.docx` | `23e5bf32b97336eb` |
-| `09_sales/08_集客・料金・売上の考え方.md` | `09_集客・料金・売上/08_集客・料金・売上の考え方.docx` | `9817baa386b137b2` |
-| `10_legal/20_お客様利用規約_法務確認用ドラフト.md` | `10_契約・正式ルール/20_お客様利用規約_法務確認用ドラフト.docx` | `b5d3812a4445001a` |
-| `10_legal/21_プライバシーポリシー_法務確認用ドラフト.md` | `10_契約・正式ルール/21_プライバシーポリシー_法務確認用ドラフト.docx` | `8fcb699233320337` |
-| `10_legal/22_協力業者契約書_法務確認用ドラフト.md` | `10_契約・正式ルール/22_協力業者契約書_法務確認用ドラフト.docx` | `e3c6f3426a02b32c` |
-| `10_legal/23_個別案件条件書_テンプレート.md` | `10_契約・正式ルール/23_個別案件条件書_テンプレート.docx` | `e1d4131a0ceea810` |
-| `10_legal/24_キャンセル・保証・再施工・返金ルール_ドラフト.md` | `10_契約・正式ルール/24_キャンセル・保証・再施工・返金ルール_ドラフト.docx` | `5495019119137471` |
-| `10_legal/25_優先担当エリア・応援・引き抜き防止ルール_ドラフト.md` | `10_契約・正式ルール/25_優先担当エリア・応援・引き抜き防止ルール_ドラフト.docx` | `38b7a58656511cfa` |
-| `10_legal/26_特定商取引法に基づく表記_ひな形.md` | `10_契約・正式ルール/26_特定商取引法に基づく表記_ひな形.docx` | `0642a5f2acc7b36b` |
-| `11_training/13_協力業者の研修・合格基準.md` | `11_研修/13_協力業者の研修・合格基準.docx` | `da78d1d8d01660ec` |
-| `12_expansion/15_沖縄から全国へ広げる計画書.md` | `12_沖縄から全国展開/15_沖縄から全国へ広げる計画書.docx` | `ac7e2bd1bf1f4f74` |
-| `13_brand/16_HOMENECT_ブランドルール.md` | `13_ブランド/16_HOMENECT_ブランドルール.docx` | `64dc25599dc2181f` |
-| `07_system/20_HOMENECT_Business_Concept_Master_v2.2.md` | `15_開発会社向け正式資料/HOMENECT_Business_Concept_Master_v2.2.docx` | `5e82448c2d650e89` |
-| `07_system/21_HOMENECT_Formal_Development_Order_Spec_v2.1.md` | `15_開発会社向け正式資料/HOMENECT_Formal_Development_Order_Spec_v2.1.docx` | `7976c8e6ee9d0c10` |
-| `templates/普段使う用紙集.md` | `14_管理台帳・用紙/HOMENECT_運営管理・普段使う用紙集_v1.0.xlsx` | `9052efc48d17fd44` |
-| `09_sales/17_料金・報酬・収益シミュレーション.md` | `14_管理台帳・用紙/HOMENECT_料金・報酬・収益シミュレーション_v1.0.xlsx` | `904832c1c93136ea` |
+| 事業 | `01_business/01_HOMENECT事業の全体説明書.md` | `01_HOMENECT_事業の全体説明書` v1.1 |
+| 1枚説明 | `01_business/10_1枚で分かるHOMENECT.md` | `10_1枚で分かるHOMENECT` v1.1 |
+| Partnerルール | `03_partners/03_協力業者向けの参加ルール.md` | `03_協力業者向けの参加ルール` v1.1 |
+| 運営 | `06_operations/06_毎日の運営のやり方.md` | `06_毎日の運営のやり方` v1.1 |
+| システム | `07_system/07_HOMENECTシステムの作り方説明書.md` | `07_HOMENECT_システムの作り方説明書` v1.1 |
+| 料金・売上 | `09_sales/08_集客・料金・売上の考え方.md` | `08_集客・料金・売上の考え方` v1.1 |
+| お客様規約 | `10_legal/20_お客様利用規約_法務確認用ドラフト.md` | 法務確認用 v1.1 |
+| Partner契約 | `10_legal/22_協力業者契約書_法務確認用ドラフト.md` | 法務確認用 v1.1 |
+| 個別案件 | `10_legal/23_個別案件条件書_テンプレート.md` | v1.1 |
+| 応援・関係保護 | `10_legal/25_優先担当エリア・応援・引き抜き防止ルール_ドラフト.md` | 法務確認用 v1.1 |
+| 正式Decision | `07_system/24_案件価格保護・応援施工制度_正式決定.md` | Price Protection正式採用資料 |
+| 要件追跡 | `07_system/22_HOMENECT_Requirements_Traceability_v2.2.md` | `HOMENECT_Requirements_Traceability_v2.2.xlsx` |
+| 運営マスター | `07_system/23_HOMENECT_Business_Operations_Master_v2.3.md` | `HOMENECT_Business_Operations_Master_v2.3.xlsx` |
+| 普段使う用紙 | `templates/普段使う用紙集.md` | `HOMENECT_運営管理・普段使う用紙集_v1.1.xlsx` |
+| 収益モデル | `09_sales/17_料金・報酬・収益シミュレーション.md` | `HOMENECT_料金・報酬・収益シミュレーション_v1.1.xlsx` |
+
+## 大型正式資料の版管理
+
+GitHubには、変更追跡しやすいように基礎全文と正式Decisionを分けて保持します。
+
+- 基礎全文：`07_system/20_HOMENECT_Business_Concept_Master_v2.2.md`
+- 基礎全文：`07_system/21_HOMENECT_Formal_Development_Order_Spec_v2.1.md`
+- v1.1追加Decision：`07_system/24_案件価格保護・応援施工制度_正式決定.md`
+- v2.2要件追加：`07_system/22_HOMENECT_Requirements_Traceability_v2.2.md`
+- v2.3運営Decision：`07_system/23_HOMENECT_Business_Operations_Master_v2.3.md`
+
+Google Driveには、これらを統合した完成版として以下を保存しています。
+
+- `HOMENECT_Business_Concept_Master_v2.3.docx/.pdf`
+- `HOMENECT_Formal_Development_Order_Spec_v2.2.docx/.pdf`
+- `HOMENECT_Requirements_Traceability_v2.2.xlsx`
+- `HOMENECT_Business_Operations_Master_v2.3.xlsx`
+
+## 法務資料
+
+契約・利用規約等は**法務確認用ドラフト**の位置づけを維持します。実運用前に専門家レビューが必要です。
 
 ## 状態
 
-**全文同期完了**（2026-09-16）
+**v1.1 更新・同期完了（2026-09-16）**
