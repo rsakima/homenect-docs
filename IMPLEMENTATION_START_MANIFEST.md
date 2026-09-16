@@ -10,7 +10,7 @@ Status: **LOCKED / READY FOR P0 IMPLEMENTATION**
 | Formal Development Order Spec | v2.4 | 最上位実装正本 |
 | ERD / DB Design | v1.0 | DB/RLS/Index/Concurrency |
 | State Transition / Business Flow | v1.0 | 状態・HELP・Referral・Incident |
-| API Spec / OpenAPI | v1.0 | Route/Contract/Webhook |
+| API Spec / OpenAPI | v1.0 + Override v1.1 | Route/Contract/Webhook |
 | Screen Detail Spec | v1.0 | 入力/表示/権限/Validation |
 | Development & Operations Runbook | v1.0 | CI/CD/Deploy/Backup/Incident |
 
@@ -22,6 +22,7 @@ Status: **LOCKED / READY FOR P0 IMPLEMENTATION**
 - [Config Registry v1.0](07_system/33_HOMENECT_Config_Registry_v1.0.md)
 - [Notification Event / Template v1.0](07_system/34_HOMENECT_Notification_Event_Template_v1.0.md)
 - [Pilot / Production Gate Checklist v1.0](07_system/35_HOMENECT_Pilot_Production_Gate_Checklist_v1.0.md)
+- [OpenAPI Overrides v1.1](07_system/openapi/HOMENECT_OpenAPI_Overrides_v1.1.yaml)
 
 ## Companion / Formal Decisions
 
@@ -48,6 +49,13 @@ Status: **LOCKED / READY FOR P0 IMPLEMENTATION**
 - 電話番号はP0では連絡先であり認証IDにしない
 - Partner / Adminは招待制
 - `partner_admin` とPlatform AdminはProduction前MFA必須
+
+## API Contract Clarification
+
+- `POST /reservations` は本人確認済みSubjectのみ実行可能
+- `customer_price_locked` はREQUESTED / MATCHINGではnull可、CONFIRMED以降で必須
+- 通常JobOfferは `partner_compensation`、HELP専用報酬は `support_payout`
+- Full OpenAPI v1.0には `HOMENECT_OpenAPI_Overrides_v1.1.yaml` を必ず適用する
 
 ## Config / Notification Lock
 
@@ -84,6 +92,7 @@ GitHubでは `07_system/21_HOMENECT_Formal_Development_Order_Spec_v2.4.md` を�
 - Config registry: **LOCKED**
 - Notification event/template: **LOCKED**
 - Pilot/Production Gate: **LOCKED**
+- API contract override: **LOCKED**
 - Real pricing/payout/minimum_margin: **CONFIG / Pilot前決定**
 - Legal review: **Production Gate**
 - Initial real Partner/Area/insurance: **Pilot Gate**
