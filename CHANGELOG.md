@@ -1,5 +1,20 @@
 # HOMENECT CHANGELOG
 
+## 2026-09-16 — 役割・権限モデル v1.0 正式採用
+
+### 正式ロック
+- 利用者を **3グループ**（お客様 / 協力業者 / HOMENECT運営）で整理。
+- 内部権限を **7役割**（customer / partner_admin / technician / ops_admin / finance_admin / compliance_admin / super_admin）で固定。
+- 1人1アカウント・複数Role兼任を正式採用。
+- Partner Roleはorganization scope必須。
+- deny-by-defaultを認可原則として採用。
+- 高リスク操作の自己承認禁止を採用。
+- 重要操作のAuditを必須化。
+- 優先業者 / 予備業者 / 応援業者 / 専門業者はRBAC Roleではなく案件・Partner関係属性として扱う。
+- `07_system/30_HOMENECT_Role_Permission_Model_v1.0.md` を正式Decisionとして追加。
+
+---
+
 ## 2026-09-16 — 実装開始パッケージ v1.0 / Development Spec v2.4
 
 ### 正式ロック
