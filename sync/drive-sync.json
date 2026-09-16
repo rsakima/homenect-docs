@@ -1,0 +1,38 @@
+{
+  "drive_folders": {
+    "package": "18I7sAQi8dSgA7_-JsRXiSQbfDQDJUI_f",
+    "openapi": "11RtwU5EBKdxSR16fnbSNS6ysj9PRhTvE"
+  },
+  "documents": [
+    {
+      "sources": [
+        "07_system/v2.4/HOMENECT_Formal_Development_Order_Spec_v2.4_part01.md",
+        "07_system/v2.4/HOMENECT_Formal_Development_Order_Spec_v2.4_part02.md",
+        "07_system/v2.4/HOMENECT_Formal_Development_Order_Spec_v2.4_part03.md",
+        "07_system/v2.4/HOMENECT_Formal_Development_Order_Spec_v2.4_part04.md"
+      ],
+      "basename": "HOMENECT_Formal_Development_Order_Spec_v2.4",
+      "folder": "package",
+      "formats": ["md", "docx", "pdf"]
+    },
+    {"source":"07_system/25_HOMENECT_ERD_DB_Design_v1.0.md","basename":"HOMENECT_ERD_DB_Design_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/26_HOMENECT_State_Transition_Business_Flow_v1.0.md","basename":"HOMENECT_State_Transition_Business_Flow_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/27_HOMENECT_API_Spec_v1.0.md","basename":"HOMENECT_API_Spec_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/28_HOMENECT_Screen_Detail_Spec_v1.0.md","basename":"HOMENECT_Screen_Detail_Spec_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/29_HOMENECT_Development_Operations_Runbook_v1.0.md","basename":"HOMENECT_Development_Operations_Runbook_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/30_HOMENECT_Role_Permission_Model_v1.0.md","basename":"HOMENECT_Role_Permission_Model_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/31_HOMENECT_RBAC_Implementation_Spec_v1.0.md","basename":"HOMENECT_RBAC_Implementation_Spec_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/32_HOMENECT_Auth_Account_Lifecycle_v1.0.md","basename":"HOMENECT_Auth_Account_Lifecycle_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/33_HOMENECT_Config_Registry_v1.0.md","basename":"HOMENECT_Config_Registry_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/34_HOMENECT_Notification_Event_Template_v1.0.md","basename":"HOMENECT_Notification_Event_Template_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/35_HOMENECT_Pilot_Production_Gate_Checklist_v1.0.md","basename":"HOMENECT_Pilot_Production_Gate_Checklist_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/36_HOMENECT_AI_Collaborative_Development_Protocol_v1.0.md","basename":"HOMENECT_AI_Collaborative_Development_Protocol_v1.0","folder":"package","formats":["md","docx","pdf"]},
+    {"source":"07_system/37_HOMENECT_Development_to_Production_Flow_v1.0.md","basename":"HOMENECT_Development_to_Production_Flow_v1.0","folder":"package","formats":["md","docx","pdf"]}
+  ],
+  "raw_files": [
+    {"source":"README.md","name":"README.md","folder":"package"},
+    {"source":"IMPLEMENTATION_START_MANIFEST.md","name":"IMPLEMENTATION_START_MANIFEST.md","folder":"package"},
+    {"source":"CHANGELOG.md","name":"CHANGELOG.md","folder":"package"},
+    {"source":"07_system/openapi/HOMENECT_OpenAPI_v1.1.yaml","name":"HOMENECT_OpenAPI_v1.1.yaml","folder":"openapi"}
+  ]
+}
