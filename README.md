@@ -41,9 +41,11 @@ P0実装開始用の正式6資料をLOCKEDとします。
 - HELPだけでpreferred Partnerを変更しない。
 - Partner間の通常販売価格を常時相互表示しない。
 - Admin例外操作はRole + reason + Audit必須。
+- 利用者・権限は**3グループ・7役割**で管理し、複数役割兼任、組織スコープ、deny-by-default、高リスク自己承認禁止、Auditを適用する。
 
 ## 既存正式Decision
 - [案件価格保護・応援施工制度](07_system/24_案件価格保護・応援施工制度_正式決定.md)
+- [役割・権限モデル v1.0](07_system/30_HOMENECT_Role_Permission_Model_v1.0.md)
 - Business Concept Master v2.3（Google Drive完成版）
 - Requirements Traceability v2.3（Google Drive完成版）
 - Business Operations Master v2.4（Google Drive完成版）
