@@ -1,5 +1,19 @@
 # HOMENECT CHANGELOG
 
+## 2026-09-16 — GitHub → Google Drive 自動同期基盤を追加
+
+- `.github/workflows/sync-google-drive.yml` を追加。
+- `sync/drive-sync.json` に同期対象とDrive保存先を定義。
+- `scripts/build_drive_docs.py` でMarkdownからWord/PDFを自動生成。
+- `scripts/sync_drive.py` でDrive上の同名ファイルを更新、なければ新規作成。
+- `scripts/google_drive_oauth_setup.py` を追加し、初回OAuth設定を簡略化。
+- `docs/GOOGLE_DRIVE_AUTO_SYNC.md` を追加。
+- GitHubを正式資料のSource of Truth、Google Driveを完成版の自動反映先とする一方向同期方式を採用。
+- DriveからGitHubへの逆同期、自動削除は行わない。
+- Google Driveへの実アップロードは `GDRIVE_CLIENT_ID / GDRIVE_CLIENT_SECRET / GDRIVE_REFRESH_TOKEN` のGitHub Secrets登録後に有効化する。
+
+---
+
 ## 2026-09-16 — 人向け「開発から公開までの流れ」v1.0 正式追加
 
 - `07_system/37_HOMENECT_Development_to_Production_Flow_v1.0.md` を追加。
