@@ -12,12 +12,26 @@ Status: **LOCKED / READY FOR P0 IMPLEMENTATION**
 | Screen Detail Spec | v1.0 | 入力/表示/権限/Validation |
 | Development & Operations Runbook | v1.0 | CI/CD/Deploy/Backup/Incident |
 
-## Companion
+## Companion / Formal Decisions
 
 - Business Concept Master v2.3
 - Requirements Traceability v2.3
 - Business Operations Master v2.4
 - 案件価格保護・応援施工制度 v1.0
+- [HOMENECT Role / Permission Model v1.0](07_system/30_HOMENECT_Role_Permission_Model_v1.0.md)
+
+## Role / Permission Lock
+
+P0の利用者・権限モデルとして次を正式採用する。
+
+- 利用者区分: お客様 / 協力業者 / HOMENECT運営の3グループ
+- 内部Role: `customer / partner_admin / technician / ops_admin / finance_admin / compliance_admin / super_admin`
+- 1人1アカウント、複数Role兼任可能
+- Partner Roleはorganization scope必須
+- deny-by-default
+- 高リスク操作は自己承認禁止
+- 重要操作はAudit必須
+- 優先業者 / 予備業者 / 応援業者 / 専門業者はRoleではなく案件・Partner関係属性
 
 ## GitHub全文同期
 
@@ -37,6 +51,7 @@ GitHubでは `07_system/21_HOMENECT_Formal_Development_Order_Spec_v2.4.md` を�
 
 - P0 coding: **READY**
 - Tech stack: **LOCKED — Next.js + TypeScript + Supabase**
+- Role/Permission model: **LOCKED — 3 groups / 7 roles**
 - Real pricing/payout/minimum_margin: **CONFIG / Pilot前決定**
 - Legal review: **Production Gate**
 - Initial real Partner/Area/insurance: **Pilot Gate**
