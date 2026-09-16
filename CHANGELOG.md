@@ -1,5 +1,24 @@
 # HOMENECT CHANGELOG
 
+## 2026-09-16 — 実装ロック v1.1 正式採用
+
+### 追加ロック
+- 権限実装仕様 v1.0：3グループ・7役割を `role_assignments` + organization scopeで実装。
+- ログイン・アカウント設計 v1.0：閲覧は匿名、予約REQUESTED作成前に本人確認。Customer標準はメールOTP、LINEは任意連携。
+- 設定値一覧 v1.0：料金、fee、HELP payout、minimum_margin、offer timeout等をConfig管理し、コードへ固定しない。
+- 通知ルール v1.0：Transactional Outbox + retry/fallback/dead handlingを正式採用。
+- Pilot / Production Gate Checklist v1.0：実利用・本番公開前の必須条件を固定。
+- 人向け資料は「難しくしない」を正式運用ルール化。日本語主表示、短い説明、具体例、表を優先する。
+
+### 追加資料
+- `07_system/31_HOMENECT_RBAC_Implementation_Spec_v1.0.md`
+- `07_system/32_HOMENECT_Auth_Account_Lifecycle_v1.0.md`
+- `07_system/33_HOMENECT_Config_Registry_v1.0.md`
+- `07_system/34_HOMENECT_Notification_Event_Template_v1.0.md`
+- `07_system/35_HOMENECT_Pilot_Production_Gate_Checklist_v1.0.md`
+
+---
+
 ## 2026-09-16 — 役割・権限モデル v1.0 正式採用
 
 ### 正式ロック
