@@ -1,33 +1,6 @@
 # HOMENECT システムの作り方説明書
 
-> **同期元:** `07_システム/07_HOMENECT_システムの作り方説明書.docx` / 2026-09-16 完成版
-
-> 難しい技術名より「誰が、何をできるか」で理解する
-
-> 分かりやすい正式説明資料  |  v1.0  |  2026-09-16
-
-> この資料で分かること  
-> お客様画面 / 協力業者画面 / 運営画面 / Web中心 / LINE補助 / データ / 安全 / 完成判定
-
-説明用ビジュアル（詳細は本文を正とします）
-
-## 目次
-
-1. システムの考え方
-
-2. お客様ができること
-
-3. 協力業者ができること
-
-4. 運営ができること
-
-5. 担当を決める仕組み
-
-6. お知らせ
-
-7. お客様情報の守り方
-
-8. 完成の確認
+> **同期元:** `07_システム/07_HOMENECT_システムの作り方説明書.docx` / 2026-09-16 v1.1
 
 ## システムの考え方
 
@@ -91,6 +64,39 @@ HOMENECTの中心はWebです。お客様はアプリを入れなくても利用
 - 他社の顧客・案件は見られない。
 - 重要な変更・閲覧を記録。
 
+## 案件価格保護・応援施工制度（P0）
+
+### 必須データ
+
+- `handoff_type`：`none` / `help` / `referral`
+- `customer_price_locked`：予約確定時のお客様料金
+- `support_payout`：応援業者への受託条件
+- `platform_fee`：HOMENECT利用料
+- `support_subsidy`：事故等の例外的補填。原則0
+- `additional_work_approved_at`：追加作業の事前承認
+- `contract_party` / `payee` / `service_partner` / `warranty_owner`
+
+### 処理ルール
+
+- HELPでは`customer_price_locked`を原則維持し、`service_partner`のみ変更可能とします。
+- HELPだけでは`preferred_partner_id`を変更しません。
+- 完全紹介では新しいPrice Snapshotとお客様承認を取得後に確定します。
+- 追加作業は内容・追加金額を施工前に承認します。
+- 案件の残りが設定基準未満の場合、自動成立させずAdmin Exceptionへ送ります。
+- 他社の通常販売価格を相互に閲覧するためのUIは作りません。案件提示では必要な受託条件のみ表示します。
+
+### 追加P0 Feature
+
+- F-033 Price Protection
+- F-034 HELP Payout
+- F-035 Referral Repricing
+- F-036 Margin Guard
+- F-037 Additional Work Approval
+- F-038 Price Privacy
+- F-039 Responsibility Snapshot
+
 ## 完成の確認
 
 「画面がある」だけでは完成ではありません。予約→案件提示→受諾→施工→写真→現金記録→完了→再注文までを通して確認し、事故・権限・二重処理・バックアップもテストします。
+
+価格保護についても、応援施工、完全紹介、赤字案件、追加作業、HELP後のpreferred維持をE2Eで確認します。
