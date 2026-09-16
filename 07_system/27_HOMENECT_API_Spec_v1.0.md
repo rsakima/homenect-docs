@@ -1,9 +1,22 @@
 # HOMENECT API仕様書
 
-**Version:** v1.0  
+**Version:** v1.0（本文） / OpenAPI Contract v1.1  
 **基準日:** 2026-09-16  
 **Status:** LOCKED / P0実装正本  
-**Machine-readable:** `openapi/HOMENECT_OpenAPI_v1.0.yaml`
+**Machine-readable:** `openapi/HOMENECT_OpenAPI_v1.1.yaml`
+
+## まずここだけ
+
+実装・SDK生成・contract testは **`HOMENECT_OpenAPI_v1.1.yaml` を唯一のmachine-readable正本**として使用する。
+
+v1.1で正式反映した点：
+
+- `POST /reservations` は本人確認済みCustomerのみ実行可能。
+- `customer_price_locked` はREQUESTED / MATCHINGでは未確定（null）を許可し、CONFIRMED以降で必須。
+- 通常JobOfferの業者報酬は `partner_compensation`。
+- HELP専用の応援報酬は `support_payout`。
+
+旧 `HOMENECT_OpenAPI_v1.0.yaml` と `HOMENECT_OpenAPI_Overrides_v1.1.yaml` は履歴参照用とする。
 
 ## 1. 目的
 
@@ -41,7 +54,7 @@ Customer / Partner / Admin / LINE等の境界をAPIとして固定し、画面�
 | Method | Path | 目的 | 重要Guard |
 |---|---|---|---|
 | GET | `/availability` | 空きと概算料金 | 公開可、rate limit |
-| POST | `/reservations` | REQUESTED作成 | consent/validation/idempotency |
+| POST | `/reservations` | REQUESTED作成 | **本人確認済みSubject** + consent/validation/idempotency |
 | GET | `/reservations/{id}` | 自分の予約 | ownership |
 | POST | `/reservations/{id}/cancel` | 取消 | policy/state |
 | POST | `/identity/line/link` | LINE任意連携 | LIFF token server verify |
@@ -66,6 +79,8 @@ Customer / Partner / Admin / LINE等の境界をAPIとして固定し、画面�
 | POST | `/cash-receipts` | 現金受領 | reservation relation |
 | POST | `/incidents` | 事故報告 | assigned actor |
 | POST | `/additional-work` | 追加作業提案 | assigned actor |
+
+**報酬フィールド:** 通常JobOfferは `partner_compensation`、HELPは `support_payout` を使用する。
 
 ## 6. Admin API
 
@@ -106,20 +121,22 @@ DB transaction内で`outbox_events`を作成し、workerがLINE/Email/Web Push a
 ## 11. Security Header / Abuse
 
 - CSRF/XSS/CSPをFramework推奨に沿って設定。
-- Public availability / reservation create / uploadにrate limit。
+- Public availability / identity-start等の公開endpointにrate limit。
+- Reservation createは認証必須であってもabuse protectionを適用する。
 - File uploadはMIME/size/authをServer検証。
-- Admin/Partner OwnerはMFAをProduction Gateとする。
+- Admin/Partner AdminはMFAをProduction Gateとする。
 
 ## 12. API受入条件
 
-- OpenAPI validationがCIでPass。
+- OpenAPI v1.1 validationがCIでPass。
 - API contract testがPass。
 - 不正なstate transitionは422/409。
 - cross-tenant accessは403。
 - PII before acceptはmask。
 - Help acceptでmargin guardが動作。
 - Referral承認前の確定を拒否。
+- 未認証の`POST /reservations`を拒否。
 
 ## 13. OpenAPIの扱い
 
-`HOMENECT_OpenAPI_v1.0.yaml`をmachine-readable sourceとし、route実装・SDK生成・contract testの基準にする。API変更はOpenAPIを先に変更し、Change Request/PRでレビューする。
+`HOMENECT_OpenAPI_v1.1.yaml`をmachine-readable sourceとし、route実装・SDK生成・contract testの基準にする。API変更はOpenAPIを先に変更し、Change Request/PRでレビューする。
