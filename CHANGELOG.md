@@ -1,5 +1,31 @@
 # HOMENECT CHANGELOG
 
+## 2026-09-16 — OpenAPI v1.1一本化 / Claude・Codex共同開発方式 正式採用
+
+### 実装前最終整理
+- `HOMENECT_OpenAPI_v1.1.yaml` を生成し、machine-readable API正本を1本化。
+- `POST /reservations` の本人確認必須をOpenAPIへ反映。
+- `customer_price_locked` をREQUESTED / MATCHINGではnull可、CONFIRMED以降必須として反映。
+- 通常JobOfferを `partner_compensation`、HELP報酬を `support_payout` に分離。
+- 旧OpenAPI v1.0 / Overrides v1.1は履歴参照扱いへ変更。
+
+### Claude / Codex共同開発
+- GitをAI間の共通記憶として正式採用。
+- `rsakima/homenect/AI_START_HERE.md` を共通入口として追加。
+- `docs/AI_HANDOFF.md` を現在地の正本として追加。
+- `docs/AI_DEVELOPMENT_PROTOCOL.md` を共同開発手順として追加。
+- `CLAUDE.md` と `AGENTS.md` から同一Handoff方式へ接続。
+- 1 PR = 1目的、Single Writer、checkpoint commit + push、Handoff更新を正式運用化。
+- Token節約手順を `Search → Minimum Read → Reuse → Minimum Change → Verify → Diff → Handoff` として固定。
+- `07_system/36_HOMENECT_AI_Collaborative_Development_Protocol_v1.0.md` をFormal Decisionとして追加。
+
+### Repository安全準備
+- `.gitignore` を追加し `.env` / secrets / local artifacts を除外。
+- `.env.example` を追加しSecret名だけ共有する方式へ固定。
+- 本体READMEを最新の実装正本・Handoff方式へ更新。
+
+---
+
 ## 2026-09-16 — 実装ロック v1.1 正式採用
 
 ### 追加ロック
