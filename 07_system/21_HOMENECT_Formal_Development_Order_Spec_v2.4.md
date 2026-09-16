@@ -29,8 +29,11 @@ Google Driveに保存した `HOMENECT_Formal_Development_Order_Spec_v2.4.md` の
 - [状態遷移・業務フロー仕様書 v1.0](26_HOMENECT_State_Transition_Business_Flow_v1.0.md)
 - [API仕様書 v1.0](27_HOMENECT_API_Spec_v1.0.md)
 - [OpenAPI v1.0](openapi/HOMENECT_OpenAPI_v1.0.yaml)
+- [OpenAPI Overrides v1.1](openapi/HOMENECT_OpenAPI_Overrides_v1.1.yaml)
 - [画面詳細仕様書 v1.0](28_HOMENECT_Screen_Detail_Spec_v1.0.md)
 - [開発・運用Runbook v1.0](29_HOMENECT_Development_Operations_Runbook_v1.0.md)
+
+OpenAPIはv1.0をbaseとし、v1.1 Overrideを必ず適用する。次回のFull OpenAPI再生成時にOverrideを本体へ統合する。
 
 ## 追加実装ロック v1.1
 
@@ -52,6 +55,7 @@ Google Driveに保存した `HOMENECT_Formal_Development_Order_Spec_v2.4.md` の
 - 技術スタック: Next.js + TypeScript + Supabase をLOCK。
 - Role/Permission: 3グループ・7役割、複数Role、organization scope、deny-by-defaultをLOCK。
 - Customer認証: 閲覧は匿名、予約REQUESTED作成前にメールOTPまたは任意LINE本人確認をLOCK。
+- API Contract: `POST /reservations`は本人確認済み、`customer_price_locked`はCONFIRMED前null可、通常JobOfferとHELP報酬を分離。
 - Config: 料金・fee・HELP payout・minimum_margin等はConfig管理し、既存予約へ遡及しない。
 - Notification: Transactional Outbox + retry/fallbackをLOCK。
 - Pilot / Production GateをLOCK。
