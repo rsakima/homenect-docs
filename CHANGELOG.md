@@ -1,5 +1,17 @@
 # HOMENECT CHANGELOG
 
+## 2026-09-16 — 人向け「開発から公開までの流れ」v1.0 正式追加
+
+- `07_system/37_HOMENECT_Development_to_Production_Flow_v1.0.md` を追加。
+- 開発 → 自動チェック → main → Staging → ブラウザ確認 → Production承認 → 本番公開 → 監視、の流れを簡単な日本語で固定。
+- Gitは `main + 短命feature/fix/chore branch`、環境は Development / Preview / Staging / Production として分離。
+- 長期の `dev / staging / main` 3ブランチ運用は採用しない。
+- ProductionにはStaging確認済みの同一commitをデプロイする。
+- Claude / Codex交代はGit + `docs/AI_HANDOFF.md` を利用する。
+- Product Ownerの通常作業はStaging確認とProduction公開承認を中心とする。
+
+---
+
 ## 2026-09-16 — OpenAPI v1.1一本化 / Claude・Codex共同開発方式 正式採用
 
 ### 実装前最終整理
