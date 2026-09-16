@@ -1,0 +1,77 @@
+name: Sync formal docs to Google Drive
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '07_system/**'
+      - 'README.md'
+      - 'IMPLEMENTATION_START_MANIFEST.md'
+      - 'CHANGELOG.md'
+      - 'sync/**'
+      - 'scripts/**'
+      - '.github/workflows/sync-google-drive.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: homenect-drive-sync
+  cancel-in-progress: true
+
+jobs:
+  build-and-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+      GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+      GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install document tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc fonts-noto-cjk
+          python -m pip install --upgrade pip
+          python -m pip install weasyprint google-api-python-client google-auth google-auth-oauthlib
+
+      - name: Build Drive documents
+        run: python scripts/build_drive_docs.py
+
+      - name: Upload generated package as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: homenect-drive-sync-package
+          path: .sync-output/
+          retention-days: 7
+
+      - name: Check Google Drive credentials
+        id: drive-auth
+        shell: bash
+        run: |
+          if [[ -n "$GDRIVE_CLIENT_ID" && -n "$GDRIVE_CLIENT_SECRET" && -n "$GDRIVE_REFRESH_TOKEN" ]]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Google Drive sync is prepared but not activated. Add GDRIVE_CLIENT_ID, GDRIVE_CLIENT_SECRET and GDRIVE_REFRESH_TOKEN repository secrets."
+          fi
+
+      - name: Sync to Google Drive
+        if: steps.drive-auth.outputs.configured == 'true'
+        run: python scripts/sync_drive.py
+
+      - name: Summary
+        run: |
+          echo "## HOMENECT Google Drive Sync" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Documents built: yes" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Drive credentials configured: ${{ steps.drive-auth.outputs.configured }}" >> "$GITHUB_STEP_SUMMARY"
+          if [[ "${{ steps.drive-auth.outputs.configured }}" == "true" ]]; then
+            echo "- Google Drive sync: completed" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- Google Drive sync: waiting for one-time credential setup" >> "$GITHUB_STEP_SUMMARY"
+          fi
