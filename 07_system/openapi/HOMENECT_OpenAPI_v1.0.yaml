@@ -1,0 +1,1290 @@
+openapi: 3.1.0
+info:
+  title: HOMENECT API
+  version: 1.0.0
+  description: HOMENECT P0/P1 API contract. Web First / PWA Optional / LINE Connected.
+    Business rules are enforced server-side and in PostgreSQL constraints/RLS.
+servers:
+- url: https://stg.example.com/api/v1
+  description: Staging (placeholder domain)
+- url: https://app.example.com/api/v1
+  description: Production (placeholder domain)
+security:
+- bearerAuth: []
+tags:
+- name: Customer
+- name: Partner
+- name: Admin
+- name: Integration
+paths:
+  /availability:
+    get:
+      tags:
+      - Customer
+      summary: 対応可能枠と概算料金を取得
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityResult'
+        '400': &id001
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401': &id002
+          description: Unauthenticated
+        '403': &id003
+          description: Forbidden
+        '409': &id004
+          description: State/version conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422': &id005
+          description: Business rule rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security: []
+      parameters:
+      - name: service_code
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: area_code
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+  /reservations:
+    post:
+      tags:
+      - Customer
+      summary: 依頼を作成（REQUESTED）
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationSummary'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReservationRequest'
+      security: []
+  /reservations/{id}:
+    get:
+      tags:
+      - Customer
+      summary: 自分の予約詳細を取得
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationSummary'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /reservations/{id}/cancel:
+    post:
+      tags:
+      - Customer
+      summary: 取消を申請/実行
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationSummary'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /customer/preferred-partner/change-request:
+    post:
+      tags:
+      - Customer
+      summary: 優先担当の変更/解除を依頼
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - action
+              properties:
+                action:
+                  type: string
+                  enum:
+                  - change
+                  - remove
+                partner_id:
+                  type:
+                  - string
+                  - 'null'
+                  format: uuid
+                reason:
+                  type:
+                  - string
+                  - 'null'
+  /referrals/{id}/approve:
+    post:
+      tags:
+      - Customer
+      summary: 完全紹介の新業者・新料金を承認
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationSummary'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /referrals/{id}/reject:
+    post:
+      tags:
+      - Customer
+      summary: 完全紹介を拒否
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /additional-work/{id}/approve:
+    post:
+      tags:
+      - Customer
+      summary: 追加作業と追加料金を承認
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalWork'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /additional-work/{id}/reject:
+    post:
+      tags:
+      - Customer
+      summary: 追加作業を拒否
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalWork'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /identity/line/link:
+    post:
+      tags:
+      - Customer
+      summary: LINE external identityを任意連携
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - liff_token
+              properties:
+                liff_token:
+                  type: string
+  /partner/offers:
+    get:
+      tags:
+      - Partner
+      summary: 自社に提示されたJobOffer一覧
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobOffer'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+  /partner/offers/{id}/accept:
+    post:
+      tags:
+      - Partner
+      summary: JobOfferを受諾
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationSummary'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+  /partner/offers/{id}/decline:
+    post:
+      tags:
+      - Partner
+      summary: JobOfferを辞退
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason_code:
+                  type: string
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /partner/availability:
+    put:
+      tags:
+      - Partner
+      summary: 受付ON/OFF・空き・休みを更新
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - accepting
+              properties:
+                accepting:
+                  type: boolean
+                capacity:
+                  type: integer
+                  minimum: 0
+                blackouts:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      from:
+                        type: string
+                        format: date-time
+                      to:
+                        type: string
+                        format: date-time
+  /reservations/{id}/help:
+    post:
+      tags:
+      - Partner
+      summary: HELPを依頼
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelpRequest'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - reason
+              properties:
+                reason:
+                  type: string
+                preferred_time:
+                  type:
+                  - string
+                  - 'null'
+                  format: date-time
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /help/{id}/accept:
+    post:
+      tags:
+      - Partner
+      summary: 提示されたHELPを受諾（採算ガード）
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationSummary'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+  /help/{id}/decline:
+    post:
+      tags:
+      - Partner
+      summary: HELPを辞退
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /worklogs:
+    post:
+      tags:
+      - Partner
+      summary: 施工記録を保存
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkLogRequest'
+  /cash-receipts:
+    post:
+      tags:
+      - Partner
+      summary: 現金受領を記録
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CashReceiptRequest'
+  /incidents:
+    post:
+      tags:
+      - Partner
+      summary: 事故・トラブルを報告
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncidentRequest'
+  /additional-work:
+    post:
+      tags:
+      - Partner
+      summary: 追加作業を顧客へ提案
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdditionalWork'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - reservation_id
+              - description
+              - price
+              properties:
+                reservation_id:
+                  type: string
+                  format: uuid
+                description:
+                  type: string
+                price:
+                  type: integer
+                  minimum: 1
+  /admin/reservations:
+    get:
+      tags:
+      - Admin
+      summary: 予約一覧・検索
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReservationSummary'
+                  next_cursor:
+                    type:
+                    - string
+                    - 'null'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      parameters:
+      - name: status
+        in: query
+        schema:
+          $ref: '#/components/schemas/ReservationStatus'
+      - name: cursor
+        in: query
+        schema:
+          type: string
+  /admin/reservations/{id}/transition:
+    post:
+      tags:
+      - Admin
+      summary: 許可された例外状態遷移
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationSummary'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransitionRequest'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /admin/reservations/{id}/referral:
+    post:
+      tags:
+      - Admin
+      summary: 完全紹介を開始しCustomer再承認待ちへ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Referral'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - to_partner_id
+              properties:
+                to_partner_id:
+                  type: string
+                  format: uuid
+                reason:
+                  type: string
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /admin/subsidies/{reservation_id}/approve:
+    post:
+      tags:
+      - Admin
+      summary: 限定的な差額補填を承認
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubsidyApprovalRequest'
+      parameters:
+      - name: reservation_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+  /admin/partners:
+    get:
+      tags:
+      - Admin
+      summary: Partner一覧
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+  /admin/areas:
+    get:
+      tags:
+      - Admin
+      summary: AreaZone/PartnerArea一覧
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+  /admin/notification-policy:
+    get:
+      tags:
+      - Admin
+      summary: 通知Policyを取得
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+    put:
+      tags:
+      - Admin
+      summary: 通知Policyを更新
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+  /admin/incidents:
+    get:
+      tags:
+      - Admin
+      summary: 事故一覧
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+  /admin/compliance-cases:
+    get:
+      tags:
+      - Admin
+      summary: Compliance Case一覧
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+  /admin/audit:
+    get:
+      tags:
+      - Admin
+      summary: 監査ログ検索
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+  /webhooks/line:
+    post:
+      tags:
+      - Integration
+      summary: LINE webhook
+      responses:
+        '200':
+          description: OK
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '409': *id004
+        '422': *id005
+      security: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - code
+          - message
+          - request_id
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            request_id:
+              type: string
+            details:
+              type:
+              - object
+              - 'null'
+              additionalProperties: true
+    Money:
+      type: object
+      required:
+      - amount
+      - currency
+      properties:
+        amount:
+          type: integer
+          description: JPY integer amount
+        currency:
+          type: string
+          const: JPY
+    ReservationStatus:
+      type: string
+      enum:
+      - REQUESTED
+      - MATCHING
+      - CONFIRMED
+      - HELP_PENDING
+      - REFERRAL_PENDING
+      - IN_PROGRESS
+      - INCIDENT_HOLD
+      - COMPLETED
+      - CANCELED
+    HandoffType:
+      type: string
+      enum:
+      - none
+      - help
+      - referral
+    ReservationSummary:
+      type: object
+      required:
+      - id
+      - status
+      - requested_slot
+      - customer_price_locked
+      - handoff_type
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          $ref: '#/components/schemas/ReservationStatus'
+        handoff_type:
+          $ref: '#/components/schemas/HandoffType'
+        requested_slot:
+          type: string
+          format: date-time
+        customer_price_locked:
+          $ref: '#/components/schemas/Money'
+        service_partner:
+          type:
+          - object
+          - 'null'
+          properties:
+            id:
+              type: string
+              format: uuid
+            display_name:
+              type: string
+        contract_party:
+          type:
+          - string
+          - 'null'
+        payee:
+          type:
+          - string
+          - 'null'
+        warranty_owner:
+          type:
+          - string
+          - 'null'
+        version:
+          type: integer
+          minimum: 1
+    CreateReservationRequest:
+      type: object
+      required:
+      - service_code
+      - requested_slot
+      - area_code
+      - equipment
+      - consents
+      properties:
+        service_code:
+          type: string
+        requested_slot:
+          type: string
+          format: date-time
+        area_code:
+          type: string
+        equipment:
+          type: object
+          required:
+          - type
+          properties:
+            maker:
+              type:
+              - string
+              - 'null'
+            model:
+              type:
+              - string
+              - 'null'
+            type:
+              type: string
+            room:
+              type:
+              - string
+              - 'null'
+        media_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        consents:
+          type: object
+          required:
+          - terms_version
+          - privacy_version
+          properties:
+            terms_version:
+              type: string
+            privacy_version:
+              type: string
+        acquisition_source:
+          type:
+          - string
+          - 'null'
+    AvailabilityResult:
+      type: object
+      properties:
+        slots:
+          type: array
+          items:
+            type: object
+            required:
+            - starts_at
+            - price_estimate
+            properties:
+              starts_at:
+                type: string
+                format: date-time
+              price_estimate:
+                $ref: '#/components/schemas/Money'
+              confirmation_mode:
+                type: string
+                enum:
+                - request
+                - instant_if_preapproved
+    JobOffer:
+      type: object
+      required:
+      - id
+      - reservation_id
+      - expires_at
+      - support_payout
+      - terms_snapshot
+      properties:
+        id:
+          type: string
+          format: uuid
+        reservation_id:
+          type: string
+          format: uuid
+        expires_at:
+          type: string
+          format: date-time
+        approx_area:
+          type: string
+        service_summary:
+          type: string
+        support_payout:
+          $ref: '#/components/schemas/Money'
+        terms_snapshot:
+          type: object
+          additionalProperties: true
+        response:
+          type:
+          - string
+          - 'null'
+          enum:
+          - accepted
+          - declined
+          - null
+    HelpRequest:
+      type: object
+      required:
+      - id
+      - reservation_id
+      - status
+      - support_payout
+      properties:
+        id:
+          type: string
+          format: uuid
+        reservation_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - requested
+          - offered
+          - accepted
+          - declined
+          - expired
+          - canceled
+        support_payout:
+          $ref: '#/components/schemas/Money'
+        reason:
+          type: string
+    Referral:
+      type: object
+      required:
+      - id
+      - reservation_id
+      - status
+      - new_price_snapshot
+      properties:
+        id:
+          type: string
+          format: uuid
+        reservation_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - pending_customer
+          - approved
+          - rejected
+          - canceled
+        to_partner:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            display_name:
+              type: string
+        new_price_snapshot:
+          type: object
+          properties:
+            total:
+              $ref: '#/components/schemas/Money'
+            lines:
+              type: array
+              items:
+                type: object
+                additionalProperties: true
+        customer_approved_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    AdditionalWork:
+      type: object
+      required:
+      - id
+      - reservation_id
+      - description
+      - price
+      - status
+      properties:
+        id:
+          type: string
+          format: uuid
+        reservation_id:
+          type: string
+          format: uuid
+        description:
+          type: string
+        price:
+          $ref: '#/components/schemas/Money'
+        status:
+          type: string
+          enum:
+          - proposed
+          - approved
+          - rejected
+          - performed
+          - canceled
+        approved_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+    WorkLogRequest:
+      type: object
+      required:
+      - started_at
+      - ended_at
+      - test_result
+      properties:
+        started_at:
+          type: string
+          format: date-time
+        ended_at:
+          type: string
+          format: date-time
+        test_result:
+          type: string
+          enum:
+          - pass
+          - fail
+          - not_possible
+        abnormality:
+          type:
+          - string
+          - 'null'
+        before_media_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+        after_media_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+    CashReceiptRequest:
+      type: object
+      required:
+      - amount
+      - received_at
+      properties:
+        amount:
+          type: integer
+        received_at:
+          type: string
+          format: date-time
+    IncidentRequest:
+      type: object
+      required:
+      - severity
+      - category
+      - summary
+      properties:
+        severity:
+          type: string
+          enum:
+          - S1
+          - S2
+          - S3
+          - S4
+        category:
+          type: string
+        summary:
+          type: string
+        media_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+    TransitionRequest:
+      type: object
+      required:
+      - to_state
+      - reason
+      properties:
+        to_state:
+          $ref: '#/components/schemas/ReservationStatus'
+        reason:
+          type: string
+          minLength: 5
+        expected_version:
+          type: integer
+    SubsidyApprovalRequest:
+      type: object
+      required:
+      - amount
+      - reason
+      properties:
+        amount:
+          type: integer
+          minimum: 1
+        reason:
+          type: string
+          minLength: 5
