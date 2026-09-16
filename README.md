@@ -32,6 +32,10 @@ HOMENECTの事業・運営・施工・システム・契約に関する正本を
 - [Pilot / Production Gate Checklist v1.0](07_system/35_HOMENECT_Pilot_Production_Gate_Checklist_v1.0.md)
 - [AI共同開発ルール v1.0](07_system/36_HOMENECT_AI_Collaborative_Development_Protocol_v1.0.md)
 
+### 人が読む補助資料
+
+- [開発から公開までの流れ v1.0](07_system/37_HOMENECT_Development_to_Production_Flow_v1.0.md) — 開発、Staging確認、Production公開、Claude/Codex交代を2ページで把握するための簡易資料。
+
 ### OpenAPI
 
 実装・SDK生成・contract testでは **`HOMENECT_OpenAPI_v1.1.yaml` のみをmachine-readable正本として使用**する。
