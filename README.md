@@ -4,25 +4,25 @@ HOMENECTの事業・運営・施工・システム・契約に関する資料を
 
 ## このリポジトリの役割
 
-- **GitHub**：資料の原稿・変更履歴・開発会社向け仕様を管理する場所
-- **Google Drive**：人が読む完成版（PDF / Word / Excel / Google Docs）を置く場所
-- **HOMENECT Web**：お客様向けに公開する情報を置く場所
+- **GitHub**：文章の原稿、変更履歴、開発会社向け仕様の正本を管理
+- **Google Drive**：人が読む完成版（Word / PDF / Excel / PowerPoint / 画像）を管理
+- **HOMENECT Web**：お客様向けに公開する情報を管理
 
-## 正式ルール
+## 正式な管理ルール
 
-1. 文章の原稿は原則 Markdown を正本として管理します。
-2. 人に配るPDF・Word・Excel等はGoogle Driveへ置きます。
-3. 料金・報酬・対応エリアなど頻繁に変わる値は本文へ固定せず、別紙・設定値として管理します。
-4. お客様の氏名、住所、電話番号、施工写真、署名済み契約書、銀行口座、保険証券、身分証、APIキー、パスワード等の実データはこのリポジトリへ保存しません。
-5. 旧版は履歴で追跡し、正式版はREADMEとCHANGELOGで明示します。
+1. 文章資料はMarkdownを原稿の正本とします。
+2. Google Driveの完成版とMarkdownは、内容変更のたびに同期します。
+3. 料金・報酬・対応エリアなど変わりやすい値は、本文へ固定せず管理表・設定値で管理します。
+4. お客様の氏名、住所、電話番号、施工写真、署名済み契約書、銀行口座、身分証、APIキー・パスワード等の実データはこのリポジトリへ保存しません。
+5. 契約・法務資料は、本番公開・締結前に専門家確認を行います。
+6. 旧版はGit履歴で追跡し、README・CHANGELOG・SYNC_MANIFESTで現行版を明示します。
 
-## 現在の完成済み資料
+## まず読む資料
 
-- **v1.0 正式**：[HOMENECT 事業の全体説明書](01_business/01_HOMENECT事業の全体説明書.md)
-- **v1.0 正式**：[1枚で分かるHOMENECT](01_business/10_1枚で分かるHOMENECT.md)
-- **v1.0 正式**：[協力業者を募集するための説明資料](03_partners/12_協力業者を募集するための説明資料.md)
-
-人が読むGoogle Docs版もGoogle Driveへ配置済みです。
+1. [正式資料一覧・使い方](00_index/00_HOMENECT_正式資料一覧・使い方.md)
+2. [1枚で分かるHOMENECT](01_business/10_1枚で分かるHOMENECT.md)
+3. [HOMENECT 事業の全体説明書](01_business/01_HOMENECT事業の全体説明書.md)
+4. [協力業者を募集するための説明資料](03_partners/12_協力業者を募集するための説明資料.md)
 
 ## 分かりやすい基本資料 15冊
 
@@ -42,55 +42,56 @@ HOMENECTの事業・運営・施工・システム・契約に関する資料を
 14. [お客様・協力業者への対応文例集](02_customer/14_お客様・協力業者への対応文例集.md)
 15. [沖縄から全国へ広げる計画書](12_expansion/15_沖縄から全国へ広げる計画書.md)
 
-## 普段使う用紙
+## 契約・正式ルール
 
-- [普段使う用紙集](templates/普段使う用紙集.md)
+- [お客様利用規約（法務確認用ドラフト）](10_legal/20_お客様利用規約_法務確認用ドラフト.md)
+- [プライバシーポリシー（法務確認用ドラフト）](10_legal/21_プライバシーポリシー_法務確認用ドラフト.md)
+- [協力業者契約書（法務確認用ドラフト）](10_legal/22_協力業者契約書_法務確認用ドラフト.md)
+- [個別案件条件書テンプレート](10_legal/23_個別案件条件書_テンプレート.md)
+- [キャンセル・保証・再施工・返金ルール](10_legal/24_キャンセル・保証・再施工・返金ルール_ドラフト.md)
+- [優先担当エリア・応援・引き抜き防止ルール](10_legal/25_優先担当エリア・応援・引き抜き防止ルール_ドラフト.md)
+- [特定商取引法に基づく表記ひな形](10_legal/26_特定商取引法に基づく表記_ひな形.md)
 
-料金表、報酬表、優先担当エリア一覧、協力業者申込書、保険・資格確認表、作業前/完了チェック、事故報告、応援依頼、お客様対応記録、売上・支払い管理、サービス開始チェックをまとめています。
+## 開発会社向け
 
-## 変更履歴
+- [分かりやすいシステム説明書](07_system/07_HOMENECTシステムの作り方説明書.md)
+- [事業構想マスター v2.2](07_system/20_HOMENECT_Business_Concept_Master_v2.2.md)
+- [正式開発発注仕様書 v2.1](07_system/21_HOMENECT_Formal_Development_Order_Spec_v2.1.md)
 
-- [CHANGELOG.md](CHANGELOG.md)
+## ブランド
 
-## フォルダ構成
+- [HOMENECT ブランドルール](13_brand/16_HOMENECT_ブランドルール.md)
 
-- `01_business/` 事業の全体説明・収益・全体像
-- `02_customer/` お客様向け資料・対応文例
-- `03_partners/` 協力業者向け資料・募集・引き抜き防止・応援ルール
-- `04_service/` エアコンクリーニング作業・品質
-- `05_incidents/` 事故・トラブル・災害対応
-- `06_operations/` 毎日の運営・開始前確認・お金・退会時引き継ぎ
-- `07_system/` システム仕様・要件・テスト
-- `08_mockups/` 画面イメージ・モックアップ
-- `09_sales/` 集客・料金・売上
-- `10_legal/` 契約・正式ルールのひな形
-- `11_training/` 研修・合格基準
-- `12_expansion/` 沖縄から全国への展開
-- `13_brand/` ロゴ・ブランドルール
-- `templates/` 普段使う用紙・チェック表
+## 普段使う管理・用紙
+
+- [普段使う用紙・管理台帳](templates/普段使う用紙集.md)
+- [料金・報酬・収益シミュレーション](09_sales/17_料金・報酬・収益シミュレーション.md)
 
 ## 現在の正式方針
 
 - 正式ブランド：**HOMENECT**
-- 初期サービス：**エアコンクリーニング**
+- 最初のサービス：**エアコンクリーニング**
 - 開始地域：**沖縄**
 - 将来：**全国展開**
-- お客様：**Webを基本とし、LINEは任意連携**
-- 協力業者：**Web/PWAを基本とし、LINEは補助**
-- ネットワーク：**優先担当エリア＋応援業者＋応援依頼**
-- 顧客関係：**お客様の選択権を守りながら、不正な直接取引・引き抜きを防止**
+- お客様：**Webを基本、LINEは補助**
+- 協力業者：**Web / ホーム画面から使えるWeb版を基本、LINEは補助**
+- 担当エリア：**独占ではなくHOMENECT案件の優先案内**
+- 応援：**忙しい・休み・難しい案件を地域の仲間で助け合う**
+- 顧客関係：**お客様の選択権を守り、不正な直接取引・引き抜きを防止**
 - 未成約のお客様への有料LINE配信：**原則行わない**
 - 手数料：**一律20%等に固定せず、獲得元・提供価値・採算で決定**
 
 ## Google Drive
 
-人が読む正式資料はGoogle Driveで管理します。
+人が読む完成版は、Google Drive の `HOMENECT` フォルダで管理します。
 
 - HOMENECT資料フォルダ: https://drive.google.com/drive/folders/1XQmsvT1gMUpPvvRxntPF6Z09oGlnE4cm
 - 「まずここを見てください」: https://drive.google.com/drive/folders/1uuPzkG-XZhaDKcoK-Ez65MLa7VaZ2Rn7
-- 正式資料一覧: https://docs.google.com/document/d/1duYNa9PkUHzwyezgVgNS3BM3mbzVz8G8qiRAaCWpDn4/edit
-- 1枚で分かるHOMENECT: https://docs.google.com/document/d/1DfBfVsv0JjQnmbaeHsyLtvxtPZfXgxB_wDdeKtBhWM0/edit
-- 事業の全体説明書: https://docs.google.com/document/d/1nn_IXXAO1pJ7YE-1r_nB7XtCScGmTkzOE52gAeuLEgs/edit
-- 協力業者募集資料: https://docs.google.com/document/d/1o6XMfmb3kKLHAkLjCcE2XxQZSnEvinJYSEg5ot3-tls/edit
+- 視覚資料セット: https://drive.google.com/drive/folders/1bj-ExwP-vZd2y8nYd8nz9TP-1A45VNSu
 
-更新日：2026-09-16
+## 同期状況
+
+- [Markdown同期マニフェスト](SYNC_MANIFEST.md)
+- [変更履歴](CHANGELOG.md)
+
+**2026-09-16：完成資料とMarkdown原稿の全文同期済み。**
