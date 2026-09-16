@@ -16,6 +16,14 @@ HOMENECTの事業・運営・施工・システム・契約に関する資料を
 4. お客様の氏名、住所、電話番号、施工写真、署名済み契約書、銀行口座、保険証券、身分証、APIキー、パスワード等の実データはこのリポジトリへ保存しません。
 5. 旧版は履歴で追跡し、正式版はREADMEとCHANGELOGで明示します。
 
+## 現在の完成済み資料
+
+- **v1.0 正式**：[HOMENECT 事業の全体説明書](01_business/01_HOMENECT事業の全体説明書.md)
+- **v1.0 正式**：[1枚で分かるHOMENECT](01_business/10_1枚で分かるHOMENECT.md)
+- **v1.0 正式**：[協力業者を募集するための説明資料](03_partners/12_協力業者を募集するための説明資料.md)
+
+人が読むGoogle Docs版もGoogle Driveへ配置済みです。
+
 ## 分かりやすい基本資料 15冊
 
 1. [HOMENECT 事業の全体説明書](01_business/01_HOMENECT事業の全体説明書.md)
@@ -81,5 +89,8 @@ HOMENECTの事業・運営・施工・システム・契約に関する資料を
 - HOMENECT資料フォルダ: https://drive.google.com/drive/folders/1XQmsvT1gMUpPvvRxntPF6Z09oGlnE4cm
 - 「まずここを見てください」: https://drive.google.com/drive/folders/1uuPzkG-XZhaDKcoK-Ez65MLa7VaZ2Rn7
 - 正式資料一覧: https://docs.google.com/document/d/1duYNa9PkUHzwyezgVgNS3BM3mbzVz8G8qiRAaCWpDn4/edit
+- 1枚で分かるHOMENECT: https://docs.google.com/document/d/1DfBfVsv0JjQnmbaeHsyLtvxtPZfXgxB_wDdeKtBhWM0/edit
+- 事業の全体説明書: https://docs.google.com/document/d/1nn_IXXAO1pJ7YE-1r_nB7XtCScGmTkzOE52gAeuLEgs/edit
+- 協力業者募集資料: https://docs.google.com/document/d/1o6XMfmb3kKLHAkLjCcE2XxQZSnEvinJYSEg5ot3-tls/edit
 
 更新日：2026-09-16
