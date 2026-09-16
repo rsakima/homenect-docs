@@ -1,0 +1,37 @@
+format: homenect-openapi-override/v1
+base: HOMENECT_OpenAPI_v1.0.yaml
+status: LOCKED
+precedence: latest_formal_decision
+changes:
+  - target: paths./reservations.post.security
+    action: replace
+    value:
+      - bearerAuth: []
+    reason: REQUESTED作成前にCustomer本人確認を完了するため。
+
+  - target: components.schemas.ReservationSummary.required
+    action: remove_item
+    value: customer_price_locked
+    reason: REQUESTED / MATCHINGでは価格未確定を許容し、CONFIRMED以降で必須とするため。
+
+  - target: components.schemas.ReservationSummary.properties.customer_price_locked
+    action: allow_null
+    value: true
+    reason: CONFIRMED前はnullを許容するため。
+
+  - target: components.schemas.JobOffer.required
+    action: replace_item
+    from: support_payout
+    to: partner_compensation
+    reason: 通常JobOfferの受託条件とHELP専用support_payoutを区別するため。
+
+  - target: components.schemas.JobOffer.properties
+    action: rename_property
+    from: support_payout
+    to: partner_compensation
+    reason: support_payoutはHELP専用語として扱うため。
+
+rules:
+  - support_payout remains required on HelpRequest.
+  - customer_price_locked becomes required by business rule when Reservation reaches CONFIRMED.
+  - this override must be folded into the next regenerated full OpenAPI contract before Production.
