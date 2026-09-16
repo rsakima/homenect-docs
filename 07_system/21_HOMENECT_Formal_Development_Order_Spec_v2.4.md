@@ -28,12 +28,11 @@ Google Driveに保存した `HOMENECT_Formal_Development_Order_Spec_v2.4.md` の
 - [ER図・DB設計書 v1.0](25_HOMENECT_ERD_DB_Design_v1.0.md)
 - [状態遷移・業務フロー仕様書 v1.0](26_HOMENECT_State_Transition_Business_Flow_v1.0.md)
 - [API仕様書 v1.0](27_HOMENECT_API_Spec_v1.0.md)
-- [OpenAPI v1.0](openapi/HOMENECT_OpenAPI_v1.0.yaml)
-- [OpenAPI Overrides v1.1](openapi/HOMENECT_OpenAPI_Overrides_v1.1.yaml)
+- [OpenAPI v1.1](openapi/HOMENECT_OpenAPI_v1.1.yaml) **← machine-readable正本**
 - [画面詳細仕様書 v1.0](28_HOMENECT_Screen_Detail_Spec_v1.0.md)
 - [開発・運用Runbook v1.0](29_HOMENECT_Development_Operations_Runbook_v1.0.md)
 
-OpenAPIはv1.0をbaseとし、v1.1 Overrideを必ず適用する。次回のFull OpenAPI再生成時にOverrideを本体へ統合する。
+`HOMENECT_OpenAPI_v1.0.yaml` と `HOMENECT_OpenAPI_Overrides_v1.1.yaml` は履歴参照用。実装・contract testは統合済み `HOMENECT_OpenAPI_v1.1.yaml` を使用する。
 
 ## 追加実装ロック v1.1
 
@@ -45,8 +44,21 @@ OpenAPIはv1.0をbaseとし、v1.1 Overrideを必ず適用する。次回のFull
 - [設定値一覧 v1.0](33_HOMENECT_Config_Registry_v1.0.md)
 - [通知ルール v1.0](34_HOMENECT_Notification_Event_Template_v1.0.md)
 - [Pilot / Production Gate Checklist v1.0](35_HOMENECT_Pilot_Production_Gate_Checklist_v1.0.md)
+- [AI共同開発ルール v1.0](36_HOMENECT_AI_Collaborative_Development_Protocol_v1.0.md)
 
 人が読む資料は日本語を主表示とし、「まずここだけ → 一覧 → 必要な補足」の順で簡潔に書く。内部コード・DB名等は開発者向け補足として分離する。
+
+## AI共同開発ロック
+
+Claude Desktop / Claude Code / CodexはGitを共通記憶として交代可能にする。
+
+- 1 PR = 1目的
+- 同一branchは同時に1エージェントだけが編集
+- 区切りごとにcommit + push
+- 中断前に `rsakima/homenect/docs/AI_HANDOFF.md` を更新
+- 次のAIはHandoff / last commit / diff / test結果から再開
+- チャット履歴を正本にしない
+- Token節約のため、必要な仕様だけ最小Readする
 
 ## 実装開始判定
 
@@ -55,10 +67,11 @@ OpenAPIはv1.0をbaseとし、v1.1 Overrideを必ず適用する。次回のFull
 - 技術スタック: Next.js + TypeScript + Supabase をLOCK。
 - Role/Permission: 3グループ・7役割、複数Role、organization scope、deny-by-defaultをLOCK。
 - Customer認証: 閲覧は匿名、予約REQUESTED作成前にメールOTPまたは任意LINE本人確認をLOCK。
-- API Contract: `POST /reservations`は本人確認済み、`customer_price_locked`はCONFIRMED前null可、通常JobOfferとHELP報酬を分離。
+- API Contract: **OpenAPI v1.1へ一本化済み**。`POST /reservations`は本人確認済み、`customer_price_locked`はCONFIRMED前null可、通常JobOfferとHELP報酬を分離。
 - Config: 料金・fee・HELP payout・minimum_margin等はConfig管理し、既存予約へ遡及しない。
 - Notification: Transactional Outbox + retry/fallbackをLOCK。
 - Pilot / Production GateをLOCK。
+- Claude / Codex共同開発のGit Handoff方式をLOCK。
 - 未確定の料金・Partner報酬・minimum_margin等はConfigとして扱い、Coding Blockerにしない。
 - 法務確認はProduction Launch Gateとして継続する。
 - 実在Partner / 初期Area / 保険確認等はPilot Gateとして継続する。
