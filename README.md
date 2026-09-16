@@ -82,6 +82,18 @@ HOMENECT本体 `rsakima/homenect` ではGitを共通記憶として使用する�
 
 同じbranchを同時編集せず、区切りごとにcommit + pushし、交代前にHandoffを更新する。
 
+## GitHub → Google Drive 自動同期
+
+正式資料は **GitHubを正本** とし、`main`更新後にGitHub ActionsでDrive用ファイルを自動生成します。
+
+- Workflow: `.github/workflows/sync-google-drive.yml`
+- 同期対象: `sync/drive-sync.json`
+- Word/PDF生成: `scripts/build_drive_docs.py`
+- Drive更新: `scripts/sync_drive.py`
+- 初回設定: [Google Drive自動同期ガイド](docs/GOOGLE_DRIVE_AUTO_SYNC.md)
+
+**初回だけ** `GDRIVE_CLIENT_ID` / `GDRIVE_CLIENT_SECRET` / `GDRIVE_REFRESH_TOKEN` の3つをGitHub Actions Secretへ登録します。登録後は、対象資料が`main`へ入るたびに同名Driveファイルを自動更新します。DriveからGitHubへの逆同期と自動削除は行いません。
+
 ## 既存正式Decision
 
 - [案件価格保護・応援施工制度](07_system/24_案件価格保護・応援施工制度_正式決定.md)
