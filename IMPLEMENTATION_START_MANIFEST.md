@@ -10,11 +10,13 @@ Status: **LOCKED / READY FOR P0 IMPLEMENTATION**
 | Formal Development Order Spec | v2.4 | 最上位実装正本 |
 | ERD / DB Design | v1.0 | DB/RLS/Index/Concurrency |
 | State Transition / Business Flow | v1.0 | 状態・HELP・Referral・Incident |
-| API Spec / OpenAPI | v1.0 + Override v1.1 | Route/Contract/Webhook |
+| API Spec / OpenAPI | v1.0 / **v1.1** | Route/Contract/Webhook |
 | Screen Detail Spec | v1.0 | 入力/表示/権限/Validation |
 | Development & Operations Runbook | v1.0 | CI/CD/Deploy/Backup/Incident |
 
-## 追加実装ロック v1.1
+**Machine-readable API正本:** `07_system/openapi/HOMENECT_OpenAPI_v1.1.yaml`
+
+## 追加実装ロック
 
 - [Role / Permission Model v1.0](07_system/30_HOMENECT_Role_Permission_Model_v1.0.md)
 - [RBAC Implementation Spec v1.0](07_system/31_HOMENECT_RBAC_Implementation_Spec_v1.0.md)
@@ -22,7 +24,7 @@ Status: **LOCKED / READY FOR P0 IMPLEMENTATION**
 - [Config Registry v1.0](07_system/33_HOMENECT_Config_Registry_v1.0.md)
 - [Notification Event / Template v1.0](07_system/34_HOMENECT_Notification_Event_Template_v1.0.md)
 - [Pilot / Production Gate Checklist v1.0](07_system/35_HOMENECT_Pilot_Production_Gate_Checklist_v1.0.md)
-- [OpenAPI Overrides v1.1](07_system/openapi/HOMENECT_OpenAPI_Overrides_v1.1.yaml)
+- [AI Collaborative Development Protocol v1.0](07_system/36_HOMENECT_AI_Collaborative_Development_Protocol_v1.0.md)
 
 ## Companion / Formal Decisions
 
@@ -50,12 +52,13 @@ Status: **LOCKED / READY FOR P0 IMPLEMENTATION**
 - Partner / Adminは招待制
 - `partner_admin` とPlatform AdminはProduction前MFA必須
 
-## API Contract Clarification
+## API Contract Lock
 
+- **OpenAPI v1.1へ一本化済み**
 - `POST /reservations` は本人確認済みSubjectのみ実行可能
 - `customer_price_locked` はREQUESTED / MATCHINGではnull可、CONFIRMED以降で必須
 - 通常JobOfferは `partner_compensation`、HELP専用報酬は `support_payout`
-- Full OpenAPI v1.0には `HOMENECT_OpenAPI_Overrides_v1.1.yaml` を必ず適用する
+- v1.0 / Override v1.1は履歴参照のみ
 
 ## Config / Notification Lock
 
@@ -64,24 +67,24 @@ Status: **LOCKED / READY FOR P0 IMPLEMENTATION**
 - 通知はTransactional Outbox、retry、fallback、dead表示
 - 未成約Leadへの有料LINE Pushはdefault deny
 
+## AI共同開発Lock
+
+Claude Desktop / Claude Code / Codexは、Gitを共通記憶として交代可能にする。
+
+- `rsakima/homenect/AI_START_HERE.md` を共通入口にする
+- `docs/AI_HANDOFF.md` に現在地を残す
+- `docs/AI_DEVELOPMENT_PROTOCOL.md` に共同開発ルールを置く
+- 1 PR = 1目的
+- 同一branchは同時に1エージェントのみ
+- 区切りごとにcommit + push
+- 交代前にHandoffを更新
+- 次のAIはHandoff / last commit / diff / testsから再開
+- Token節約は Search → Minimum Read → Reuse → Minimum Change → Verify → Diff → Handoff
+
 ## Gate Lock
 
 - Pilot前: Partner/Area/保険、Config、RLS/Auth/E2E、通知、Incident、Restore、S1/S2=0を確認
 - Production前: 法務、MFA、Security、Monitoring、Backup/Restore、Rollback、Production Config/credentials、Data retention、S1/S2=0を確認
-
-## GitHub全文同期
-
-`HOMENECT_Formal_Development_Order_Spec_v2.4.md` の全文同期を完了。
-
-GitHubでは `07_system/21_HOMENECT_Formal_Development_Order_Spec_v2.4.md` を入口とし、本文を下記4ファイルへ順序固定で保存する。
-
-1. `07_system/v2.4/HOMENECT_Formal_Development_Order_Spec_v2.4_part01.md`
-2. `07_system/v2.4/HOMENECT_Formal_Development_Order_Spec_v2.4_part02.md`
-3. `07_system/v2.4/HOMENECT_Formal_Development_Order_Spec_v2.4_part03.md`
-4. `07_system/v2.4/HOMENECT_Formal_Development_Order_Spec_v2.4_part04.md`
-
-単一Markdown原本 SHA-256:
-`22df62922ce83b98fcd952d3c299c60930685e93f060a5df517f7cade65506aa`
 
 ## Readiness
 
@@ -92,7 +95,8 @@ GitHubでは `07_system/21_HOMENECT_Formal_Development_Order_Spec_v2.4.md` を�
 - Config registry: **LOCKED**
 - Notification event/template: **LOCKED**
 - Pilot/Production Gate: **LOCKED**
-- API contract override: **LOCKED**
+- API contract: **LOCKED — OpenAPI v1.1 unified**
+- Claude/Codex handoff: **LOCKED — Git shared-memory protocol**
 - Real pricing/payout/minimum_margin: **CONFIG / Pilot前決定**
 - Legal review: **Production Gate**
 - Initial real Partner/Area/insurance: **Pilot Gate**
