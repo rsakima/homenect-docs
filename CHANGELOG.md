@@ -21,6 +21,12 @@
 - `07_system/28_HOMENECT_Screen_Detail_Spec_v1.0.md`
 - `07_system/29_HOMENECT_Development_Operations_Runbook_v1.0.md`
 
+### v2.4 全文同期
+- Google Drive上の `HOMENECT_Formal_Development_Order_Spec_v2.4.md` の本文をGitHubへ全文同期。
+- GitHub Contents APIの運用上、本文を4分割して順序固定で保存。
+- `07_system/21_HOMENECT_Formal_Development_Order_Spec_v2.4.md` を正式入口・復元マニフェストとする。
+- 単一Markdown原本 SHA-256: `22df62922ce83b98fcd952d3c299c60930685e93f060a5df517f7cade65506aa`。
+
 ### 実装開始判定
 P0 codingは開始可能。料金・Partner報酬・minimum_margin等の実数はConfigで後決め可能。法務確認はProduction Gateとして継続。
 
