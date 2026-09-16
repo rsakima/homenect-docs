@@ -32,11 +32,29 @@ Google Driveに保存した `HOMENECT_Formal_Development_Order_Spec_v2.4.md` の
 - [画面詳細仕様書 v1.0](28_HOMENECT_Screen_Detail_Spec_v1.0.md)
 - [開発・運用Runbook v1.0](29_HOMENECT_Development_Operations_Runbook_v1.0.md)
 
+## 追加実装ロック v1.1
+
+以下は2026-09-16に正式採用したP0実装Decisionであり、同一論点について旧記述より優先する。
+
+- [役割・権限モデル v1.0](30_HOMENECT_Role_Permission_Model_v1.0.md)
+- [権限実装仕様 v1.0](31_HOMENECT_RBAC_Implementation_Spec_v1.0.md)
+- [ログイン・アカウント設計 v1.0](32_HOMENECT_Auth_Account_Lifecycle_v1.0.md)
+- [設定値一覧 v1.0](33_HOMENECT_Config_Registry_v1.0.md)
+- [通知ルール v1.0](34_HOMENECT_Notification_Event_Template_v1.0.md)
+- [Pilot / Production Gate Checklist v1.0](35_HOMENECT_Pilot_Production_Gate_Checklist_v1.0.md)
+
+人が読む資料は日本語を主表示とし、「まずここだけ → 一覧 → 必要な補足」の順で簡潔に書く。内部コード・DB名等は開発者向け補足として分離する。
+
 ## 実装開始判定
 
 **READY FOR P0 IMPLEMENTATION**
 
 - 技術スタック: Next.js + TypeScript + Supabase をLOCK。
+- Role/Permission: 3グループ・7役割、複数Role、organization scope、deny-by-defaultをLOCK。
+- Customer認証: 閲覧は匿名、予約REQUESTED作成前にメールOTPまたは任意LINE本人確認をLOCK。
+- Config: 料金・fee・HELP payout・minimum_margin等はConfig管理し、既存予約へ遡及しない。
+- Notification: Transactional Outbox + retry/fallbackをLOCK。
+- Pilot / Production GateをLOCK。
 - 未確定の料金・Partner報酬・minimum_margin等はConfigとして扱い、Coding Blockerにしない。
 - 法務確認はProduction Launch Gateとして継続する。
 - 実在Partner / 初期Area / 保険確認等はPilot Gateとして継続する。
