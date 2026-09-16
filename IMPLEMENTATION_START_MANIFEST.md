@@ -96,6 +96,16 @@ Claude Desktop / Claude Code / Codexは、Gitを共通記憶として交代可�
 - ProductionにはStaging確認済みの同一commitをデプロイする。
 - DB変更はMigrationで管理し、Staging → Productionの順に適用する。
 
+## GitHub → Google Drive Sync
+
+- GitHubを正式資料のSource of Truthとする。
+- `main`更新時に `.github/workflows/sync-google-drive.yml` が対象資料を自動ビルドする。
+- MarkdownからWord/PDFを生成し、Drive上の同名ファイルを更新する。
+- 同期対象とDrive保存先は `sync/drive-sync.json` で管理する。
+- DriveからGitHubへの逆同期はしない。
+- Drive上のファイルを自動削除しない。
+- Google Drive uploadは初回に `GDRIVE_CLIENT_ID / GDRIVE_CLIENT_SECRET / GDRIVE_REFRESH_TOKEN` をGitHub Secretへ登録後に有効化する。
+
 ## Gate Lock
 
 - Pilot前: Partner/Area/保険、Config、RLS/Auth/E2E、通知、Incident、Restore、S1/S2=0を確認
@@ -113,6 +123,7 @@ Claude Desktop / Claude Code / Codexは、Gitを共通記憶として交代可�
 - API contract: **LOCKED — OpenAPI v1.1 unified**
 - Claude/Codex handoff: **LOCKED — Git shared-memory protocol**
 - Development → Staging → Production flow: **LOCKED**
+- GitHub → Google Drive document sync: **PREPARED — one-time Google OAuth secret setup required**
 - Real pricing/payout/minimum_margin: **CONFIG / Pilot前決定**
 - Legal review: **Production Gate**
 - Initial real Partner/Area/insurance: **Pilot Gate**
